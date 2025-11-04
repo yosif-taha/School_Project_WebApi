@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SchoolProject.Data.Entities
 {
-    internal class StudentSubject
+    public class StudentSubject
     {
+        [Key]
+        public int StudentSubjectId { get; set; }
+        public int? StudentId { get; set; } // Fk For Student Relationship
+        public int? SubjectId { get; set; } // Fk For Subject Relationshap
+        public virtual Student Student { get; set; }  
+        public virtual Subjects Subject { get; set; }
+
     }
 }
