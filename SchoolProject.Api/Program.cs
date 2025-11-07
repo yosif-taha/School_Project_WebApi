@@ -1,8 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SchoolProject.Infrastructure;
 using SchoolProject.Infrastructure.Data;
-
+using SchoolProject.Services;
+using SchoolProject.Core;
 namespace SchoolProject.Api
 {
     public class Program
@@ -22,8 +24,11 @@ namespace SchoolProject.Api
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-               
-           
+
+            builder.Services.AddInfastructreDependencies()
+                .AddServicesDependencies()
+                .AddCoreDependencies(); // implementation DI by using Extension method
+
 
 
             var app = builder.Build();
