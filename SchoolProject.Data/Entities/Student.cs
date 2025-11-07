@@ -17,7 +17,7 @@ namespace SchoolProject.Data.Entities
         }
 
         [Key]
-        public int StudentID { get; set; }
+        public int StudentId { get; set; }
         [StringLength(200)]
         public string Name { get; set; }
         [StringLength(500)]
