@@ -23,6 +23,16 @@ namespace SchoolProject.Core.Bases
                 Message = "Deleted Successfully"
             };
         }
+        public Response<T> Success<T>(string Message)
+        {
+            return new Response<T>()
+            {         
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Succeeded = true,     
+                Message = Message == null ? "Added Successfully" : Message,
+
+            };
+        }
         public Response<T> Success<T>(T entity, object Meta = null)
         {
             return new Response<T>()
@@ -31,6 +41,7 @@ namespace SchoolProject.Core.Bases
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
                 Message = "Added Successfully",
+
                 Meta = Meta
             };
         }
@@ -50,6 +61,15 @@ namespace SchoolProject.Core.Bases
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Succeeded = false,
                 Message = Message == null ? "Bad Request" : Message
+            };
+        }
+        public Response<T> UnprocessableEntity<T>(string Message = null)
+        {
+            return new Response<T>()
+            {
+                StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
+                Succeeded = false,
+                Message = Message == null ? "UnprocessableEntity" : Message
             };
         }
 

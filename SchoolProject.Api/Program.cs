@@ -1,10 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using SchoolProject.Core;
+using SchoolProject.Core.MiddleWare;
 using SchoolProject.Infrastructure;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Services;
-using SchoolProject.Core;
 namespace SchoolProject.Api
 {
     public class Program
@@ -39,7 +40,7 @@ namespace SchoolProject.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
