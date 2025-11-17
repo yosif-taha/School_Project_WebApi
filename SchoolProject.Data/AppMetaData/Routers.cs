@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Data.AppMetaData
 {
-    public static class Router
+    public static class Routers
     {
         public const string singleRoute = "/{id}";
 
@@ -15,17 +15,21 @@ namespace SchoolProject.Data.AppMetaData
         public const string rule = $"{root}/{version}/";
 
 
-        public static class StudentRouting 
+        public static class StudentRouting
         {
             public const string prefix = $"{rule}Student";
             public const string List = $"{prefix}/List";
             public const string GetById = prefix + singleRoute;
-            public const string Create = prefix +"/Create";
+            public const string Create = prefix + "/Create";
             public const string Edit = prefix + "/Edit";
             public const string Delete = prefix + "/{id}";
+            public const string Paginated = prefix + "/Paginated";
+        }
 
-
-
+        public static class DepartmentRouting
+        {
+            public const string prefix = $"{rule}Department";
+            public const string GetById = prefix + "/Id";
         }
     }
 }

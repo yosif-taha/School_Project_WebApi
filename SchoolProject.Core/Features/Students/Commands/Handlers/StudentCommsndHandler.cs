@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Core.Features.Students.Commands.Handlers
 {
+    using Microsoft.Extensions.Localization;
+    using SchoolProject.Core.Resources;
     using SchoolProject.Data.Entities;
     public class StudentCommsndHandler : ResponseHandler, IRequestHandler<AddStudentCommand, Response<string>>
                                                           ,IRequestHandler<EditStudentCommand, Response<string>>
@@ -19,11 +21,14 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
     {
         private readonly IStudentServices _services;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _stringLocalization;
 
-        public StudentCommsndHandler(IStudentServices services, IMapper mapper)
+
+        public StudentCommsndHandler(IStudentServices services, IMapper mapper, IStringLocalizer<SharedResources> stringLocalization) : base(stringLocalization)
         {
             _services = services;
             _mapper = mapper;
+            _stringLocalization = stringLocalization;
         }
         public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
         {

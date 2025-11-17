@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Localization;
+using SchoolProject.Core.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +12,11 @@ namespace SchoolProject.Core.Bases
     public class ResponseHandler
     {
 
-        public ResponseHandler()
+        private readonly IStringLocalizer<SharedResources> _stringLocalization;
+
+        public ResponseHandler( IStringLocalizer<SharedResources> stringLocalization)
         {
+         _stringLocalization = stringLocalization;
 
         }
         public Response<T> Deleted<T>()
@@ -90,7 +95,7 @@ namespace SchoolProject.Core.Bases
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Created",
+                Message = _stringLocalization[SharedResourcesKeys.Created],
                 Meta = Meta
             };
         }

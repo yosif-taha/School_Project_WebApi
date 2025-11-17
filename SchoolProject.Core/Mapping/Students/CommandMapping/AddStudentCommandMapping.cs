@@ -14,7 +14,9 @@ namespace SchoolProject.Core.Mapping.Students
         public void AddStudentCommandMapping()
         {
             CreateMap<AddStudentCommand,Student>()
-        .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(surc => surc.DepartmentId));
+        .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(surc => surc.DepartmentId))
+        .ForMember(dest => dest.NameEn, opt => opt.MapFrom(surc => surc.NameEn))
+        .ForMember(dest => dest.NameAr, opt => opt.MapFrom(surc => surc.NameAr));
         }
     }
 }
