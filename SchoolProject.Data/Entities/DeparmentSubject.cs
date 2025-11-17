@@ -11,11 +11,9 @@ namespace SchoolProject.Data.Entities
 
     public class DepartmetSubject
     {
-        [Key]
-        public int DepartmentSubjectId { get; set; }
         public int DepartmentId { get; set; } // Fk for Department Relationship
-        public int SubjectId { get; set; } // Fk for Subject Relationship
-        public virtual Department Department { get; set; }
-        public virtual Subjects Subject { get; set; }
+        public int? SubjectId { get; set; } // Fk for Subject Relationship
+        public virtual Department? Department { get; set; }
+        public virtual Subjects? Subject { get; set; }
     }
 }

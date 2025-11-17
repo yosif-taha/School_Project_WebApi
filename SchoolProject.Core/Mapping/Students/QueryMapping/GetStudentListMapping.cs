@@ -14,7 +14,8 @@ namespace SchoolProject.Core.Mapping.Students
         public void GetStudentListMapping()
         {
             CreateMap<Student, GetStudentListResponse>()
-        .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(surc => surc.Department.DepartmentName));
+        .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(surc => surc.Department.Localized(surc.Department.DepartmentNameEn,surc.Department.DepartmentNameAr)))
+        .ForMember(dest => dest.Name, opt => opt.MapFrom(surc => surc.Localized(surc.NameEn,surc.NameAr)));
         }
     }
 }

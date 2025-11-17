@@ -18,34 +18,40 @@ namespace SchoolProject.Api.Controllers
         {
             
         }
-        [HttpGet(Router.StudentRouting.List)]
+        [HttpGet(Routers.StudentRouting.List)]
         public async Task<IActionResult> GetStudentList()
         {
             var response = await Mediator.Send(new GetStudentListQuery());
             return Ok(response);
         }
+        [HttpGet(Routers.StudentRouting.Paginated)]
+        public async Task<IActionResult> Paginated([FromQuery] GetStudentPAginatedListQuery query)
+        {
+            var response = await Mediator.Send(query);
+            return Ok(response);
+        }
 
-        [HttpGet(Router.StudentRouting.GetById)]
+        [HttpGet(Routers.StudentRouting.GetById)]
         public async Task<IActionResult> GetStudentById([FromRoute] int id)
         {
             var response = await Mediator.Send(new GetStudentByIdQuery(id));
             return NewResult(response);
         }
-        [HttpPost(Router.StudentRouting.Create)]
+        [HttpPost(Routers.StudentRouting.Create)]
         public async Task<IActionResult> AddStudent([FromBody] AddStudentCommand command)
         {
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
 
-        [HttpPut(Router.StudentRouting.Edit)]
+        [HttpPut(Routers.StudentRouting.Edit)]
         public async Task<IActionResult> EditStudent([FromBody] EditStudentCommand command)
         {
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
 
-        [HttpDelete(Router.StudentRouting.Delete)]
+        [HttpDelete(Routers.StudentRouting.Delete)]
         public async Task<IActionResult> DeleteStudent([FromRoute] int id)
         {
             var response = await Mediator.Send(new DeleteStudentCommand(id));

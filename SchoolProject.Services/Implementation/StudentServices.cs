@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
+using SchoolProject.Data.Helppers;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Services.Abstracts;
 using System;
@@ -52,14 +53,14 @@ namespace SchoolProject.Services.Implementation
 
         public async Task<bool> IsNameExist(string name)
         {
-            var student = _studentRepository.GetTableNoTracking().Where(S => S.Name.Equals(name)).FirstOrDefault();
+            var student = _studentRepository.GetTableNoTracking().Where(S => S.NameEn.Equals(name)).FirstOrDefault();
             if (student == null) return false;
             return true;
         }
 
         public async Task<bool> IsNameExistExecludeSelf(string name, int id)
         {
-            var student = await _studentRepository.GetTableNoTracking().Where(S => S.Name.Equals(name)&! S.StudentId.Equals(id)).FirstOrDefaultAsync();
+            var student = await _studentRepository.GetTableNoTracking().Where(S => S.NameEn.Equals(name)&! S.StudentId.Equals(id)).FirstOrDefaultAsync();
             if (student == null) return false;
             return true;
         }
@@ -79,6 +80,44 @@ namespace SchoolProject.Services.Implementation
         {
              await _studentRepository.DeleteAsync(student);
             return "Success";
+        }
+
+        public IQueryable<Student> GetStudentsQuerable()
+        {
+            return _studentRepository.GetTableNoTracking().Include(S => S.Department).AsQueryable();
+        }
+
+        public IQueryable<Student> FilterStudentPaginatedQuerabl(SudentOrderingEnum orderingEnum, string search)
+        {
+           var querable = _studentRepository.GetTableNoTracking().Include(S => S.Department).AsQueryable();
+            if (search != null)
+            {
+                querable = querable.Where(S => S.NameEn.Contains(search) || S.Address.Contains(search));
+            }
+            switch(orderingEnum)
+            {
+                case SudentOrderingEnum.StudentId:
+                    querable = querable.OrderBy(S => S.StudentId);
+                    break;
+                case SudentOrderingEnum.Name:
+                    querable = querable.OrderBy(S => S.NameEn);
+                    break;
+                case SudentOrderingEnum.Address:
+                    querable = querable.OrderBy(S => S.Address);
+                    break;
+                default:
+                    querable = querable.OrderBy(S => S.Department.DepartmentNameEn);
+                    break;
+            }    
+
+
+            return querable;
+        }
+
+        public IQueryable<Student> GetStudentsByDepartmentQuerable(int DepartmentId)
+        {
+            return _studentRepository.GetTableNoTracking().Where(S => S.DepartmentId.Equals(DepartmentId)).AsQueryable();
+
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using SchoolProject.Core.Features.Student.Queries.Results;
+﻿using Microsoft.Data.SqlClient;
+using SchoolProject.Core.Features.Student.Queries.Results;
 using SchoolProject.Core.Features.Students.Queries.Results;
 using SchoolProject.Data.Entities;
 using System;
@@ -14,7 +15,8 @@ namespace SchoolProject.Core.Mapping.Students
         public void GetStudentByIdMapping()
         {
             CreateMap<Student, GetSingleStudentResponse>()
-        .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(surc => surc.Department.DepartmentName));
+        .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(surc => surc.Department.Localized(surc.Department.DepartmentNameEn, surc.Department.DepartmentNameAr)))
+        .ForMember(dest => dest.Name, opt => opt.MapFrom(surc => surc.Localized(surc.NameEn,surc.NameAr)));
         }
     }
 }
